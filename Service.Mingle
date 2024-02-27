@@ -1,0 +1,535 @@
+Create Database Service_mingle
+ go
+
+
+Use Service_mingle
+go
+
+
+--Create schema Orders
+
+--go ---> If need create Schema and mention schema.tablename while create table 
+
+Create table Customers
+(Customer_id int identity (1000,1) Primary key,
+Customer_Name varchar(50) Not Null,
+Contact_number Int Unique Not Null,
+Email_id varchar(50) unique Not null,
+Created_at date,
+Updated_at date,
+Created_by varchar(50))
+go
+
+Drop table Customers ---> For Drop Table
+
+Truncate table Customers ---> For Truncate Table 
+
+Insert into Customers (Customer_Name , Contact_number, Email_id, Created_at,updated_at,Created_by) values('Arun','90000000','abc@gmail.com','2024-02-23','2024-02-23','Karthick')
+
+select*from customers---> Filtering a Table
+
+alter table customers add Test varchar ---> add new Column
+
+
+alter table Customers drop column Test---> Drop column
+
+delete from  Customers where customer_id = 1000 ---> delete a row / entry
+
+update Customers set Updated_at = '2024-02-24' where Customer_id = 1001 ---> Update a value in a row
+
+ALTER TABLE Customers
+Alter COLUMN Test int ----> Altering data type of a table
+
+Create index idxe_customers
+on customers (Customer_id,Contact_number,Email_id)
+
+go
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Create table Technician_table 
+(Technician_Id Int identity(10000,1) Primary key,
+Technician_Name Varchar(50)  not null, 
+Technician_contactNumber int unique not null,
+Created_at date,
+Updated_at date,
+Created_by varchar(50))
+Go
+
+
+Create index idxe_Tecnician_table
+on Technician_table (Technician_Id,Technician_Contactnumber)
+go
+
+Drop table Technician_table ---> For Drop Table
+
+Truncate table Technician_table ---> For Truncate Table 
+
+Insert into Technician_table (Technician_Name , Technician_Contactnumber,  Created_at,updated_at,Created_by) values('AK','90000000','2024-02-23','2024-02-23','Karthick')
+
+select*from Technician_table where technician_id = 10000---> Filtering a Table
+
+alter table Technician_table add Test varchar ---> add new Column
+
+
+alter table Technician_table drop column Test---> Drop column
+
+delete from  Technician_table where Technician_id = 10000 ---> delete a row / entry
+
+update Technician_table set Updated_at = '2024-02-24' where Technician_id = 10000 ---> Update a value in a row
+
+ALTER TABLE Technician_table
+Alter COLUMN Test int ----> Altering data type of a table
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Create table Device_table
+ (Device_id int identity (100,1) primary key,
+ Device_name varchar(255) Not null,
+ Device_model varchar(255) Not null,
+ Device_Type varchar(255) Not null,
+ IMEI_Number varchar(255),
+ Created_at date,
+ Updated_at date,
+ Created_by varchar(50))
+ Go
+
+ create index idx_device_table
+ on Device_table
+(Device_id,Device_type,Device_model )
+
+go
+
+Drop table Device_table ---> For Drop Table
+
+Truncate table Device_table ---> For Truncate Table 
+Insert into Device_table (Device_name , Device_model, Device_type,IMEI_number, Created_at,updated_at,Created_by) values('Apple','11-64GB','IOS','1234098756','2024-02-23','2024-02-23','Karthick')
+
+select*from Device_table where Device_id = 100---> Filtering a Table
+
+alter table Device_table add Test varchar ---> add new Column
+
+
+alter table Device_table drop column Test---> Drop column
+
+delete from  Device_table where Device_id = 10000 ---> delete a row / entry
+
+update Device_table set Updated_at = '2024-02-24' where Device_id = 100 ---> Update a value in a row
+
+ALTER TABLE Device_table
+Alter COLUMN Test int ----> Altering data type of a table
+go
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ Create table Service_table
+ (Service_id int identity (1,1) ,
+ Service_type varchar (255) Not null,
+ Created_at date,
+ Updated_at date,
+ Created_by varchar(50)
+ primary key (Service_id))
+ Go
+
+ Drop table Service_table ---> For Drop Table
+
+Truncate table Service_table ---> For Truncate Table 
+Insert into Service_table (Service_type ,Created_at,updated_at,Created_by) 
+values('Display_change','2024-02-23','2024-02-23','Karthick')
+
+
+Insert into Service_table (Service_type ,Created_at,updated_at,Created_by) 
+values('Microphone_change','2024-02-23','2024-02-23','Karthick')
+
+select*from Service_table where Service_id = 2---> Filtering a Table
+
+alter table Service_table add Test varchar ---> add new Column
+
+
+alter table Service_table drop column Test---> Drop column
+
+delete from  Service_table where Service_id = 2 ---> delete a row / entry
+
+update Service_table set Updated_at = '2024-02-24' where Service_id = 2 ---> Update a value in a row
+
+ALTER TABLE Service_table
+Alter COLUMN Test int ----> Altering data type of a table
+go
+
+
+ create index idx_Service_table
+ on Service_table
+(Service_id)
+ go
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Create table Spares_table
+(Spare_id int Primary key,
+ Spare_Name Varchar(255) not null,
+ Device_id int foreign key (Device_id) references Device_table,
+ Vendor_id int unique not null,
+ Vendor_name varchar(255) not null,
+ Vendor_price decimal (8,2),
+ Selling_price decimal (8,2),
+ Warranty varchar(50) Not null default 'No Warranty'
+ check (Warranty in ('No Warranty','3 Months','6 Months','1 Year') ),
+ Created_at date,
+ Updated_at date,
+ Created_by varchar(50)
+ )
+ go
+
+ Drop table Spares_table ---> For Drop Table
+
+Truncate table Spares_table ---> For Truncate Table 
+Insert into Spares_table 
+values(1,'Display',100,1010,'ABC Enterprises',8000.00,9500.00,'3 Months','2024-02-23','2024-02-23','Karthick')
+
+
+
+select*from Spares_table where spare_id=1---> Filtering a Table
+
+alter table Spares_table add Service_id Int foreign Key (Service_id) references Service_table ---> add new Column
+
+update Spares_table set Service_id = 1 
+
+alter table Spares_table drop column Test---> Drop column
+
+delete from  Spares_table where Spares_id = 2 ---> delete a row / entry
+
+update Spares_table set Updated_at = '2024-02-24' where Service_id = 2 ---> Update a value in a row
+
+ALTER TABLE Spares_table
+Alter COLUMN Test int ----> Altering data type of a table
+go
+
+
+ create index idx_Spares_table
+ on Spares_table
+(Spare_id,Device_id,Vendor_id,Warranty)
+go
+
+
+ ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+ Create table Pickup_table
+ (Request_id int identity (10010,10) primary key,
+ Customer_id Int,  
+ FOREIGN KEY (Customer_id)references Customers,
+ Service_id int ,
+  FOREIGN KEY (Service_id)references Service_table,
+ Device_id int,
+ Foreign Key (Device_id)references Device_table,
+ pickup_address varchar(max),
+ pickup_date date,
+ Technician_id int ,
+ Foreign key (Technician_Id)references Technician_Table,
+ Booking_status varchar(30) not null default 'Pending'
+ check (Booking_status in ('Pending','Under process','Ready To Deliver','Delivered')),
+ Created_at date,
+ Updated_at date,
+ Created_by varchar(50))
+ go
+
+ Drop table Pickup_table ---> For Drop Table
+
+Truncate table Pickup_table ---> For Truncate Table 
+Insert into Pickup_table (Customer_id ,Service_id,Device_id, Pickup_address,Pickup_date, Technician_id,Booking_status,Created_at,updated_at,Created_by) 
+values(1001,2,100,'Abc xyz ','2024-02-23',10000,'Pending','2024-02-23','2024-02-23','Karthick')
+
+select*from Pickup_table where Request_id = 10030---> Filtering a Table
+
+alter table Pickup_table add Remarks varchar(max) ---> add new Column
+
+
+alter table Pickup_table drop column Test---> Drop column
+
+delete from  Pickup_table where Request_id = 10010 ---> delete a row / entry
+
+update Pickup_table set Updated_at = '2024-02-24' where Request_id = 10010 ---> Update a value in a row
+
+ALTER TABLE Pickup_table
+Alter COLUMN Test int ----> Altering data type of a table
+go
+
+ 
+ create index idx_Pickup_table
+ on Pickup_table
+(Request_id,spare_id,Service_id,Device_id,Pickup_date,technician_id,Booking_status )
+
+ alter table pickup_table add  Remarks varchar(max) --> Column Creation Syntax
+ alter table pickup_table add Spare_id int foreign key (spare_id) references Spares_table
+ drop table Pickup_table
+ go
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Create table order_table
+(order_id int identity(20020,10) primary key,
+Service_id int Foreign key (Service_id)references service_table,
+Spare_id int foreign key (spare_id) references Spares_table,
+Device_Id int foreign key (Device_id) references Device_table,
+Technician_id int ,
+ Foreign key (Technician_Id)references Technician_Table,
+ Mode_of_Booking varchar(50) Check(Mode_of_booking in ('Walkin','Door_pickup')),
+ Request_Id int foreign key (Request_id) references pickup_table,
+ Created_at date,
+ Updated_at date,
+ Created_by varchar(25),
+ Remarks varchar(Max)) 
+ go
+
+ Drop table order_table ---> For Drop Table
+
+Truncate table order_table ---> For Truncate Table 
+Insert into order_table (Service_id,Spare_id,Device_id,Technician_id,Mode_of_booking,Created_at,updated_at,Created_by,Remarks) 
+values(1,1,100,10000,'Walkin' ,'2024-02-23','2024-02-23','Karthick','abc')
+
+select*from order_table where Request_id = 20020---> Filtering a Table
+
+
+ALTER TABLE order_table
+Add Customer_id int foreign Key(Customer_id) references Customers ---> add new Column
+
+
+alter table order_table drop column Test---> Drop column
+
+delete from  order_table where Request_id = 20020 ---> delete a row / entry
+
+update order_table set Customer_id = 1001  ---> Update a value in a row
+
+ALTER TABLE order_table
+Alter Column test int  ----> Altering data type of a table
+
+
+ create index idx_order_table
+ on order_table (Order_id,Service_id,Spare_id,Device_id,Mode_of_booking,request_id)
+go
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ Create table Transaction_table
+ (
+ Transaction_id int identity(30030,10)Primary key,
+ order_id int foreign key (order_id)references Order_table,
+ Transaction_date date,
+ spare_id int foreign key (spare_id) references Spares_table,
+ Service_id int foreign key (Service_id) references Service_table,
+ Bill_amount Decimal (8,2),
+ Created_at date,
+ Updated_at Date,
+ Created_by Varchar(25))
+ go
+
+ insert into transaction_table  (Order_id,Transaction_date,Spare_id,service_id,Bill_amount,Created_at,Updated_at,Created_by) values
+ (20020,'2024-02-27',1,1,8999.00,'2024-02-27','2024-02-27','Karthick')
+
+ Truncate table transaction_table 
+
+ select*from transaction_table where Transaction_id = 30040---> Filtering a Table
+
+alter table transaction_table add Test varchar ---> add new Column
+
+
+alter table transaction_table drop column Test---> Drop column
+
+delete from  transaction_table where Transaction_id = 30040 ---> delete a row / entry
+
+update transaction_table set Updated_at = '2024-02-24' where Transaction_id = 30040 ---> Update a value in a row
+
+ALTER TABLE transaction_table
+Alter COLUMN Test int ----> Altering data type of a table
+
+
+ Create index idx_Transaction_table
+ on Transaction_table (Transaction_id,order_id,Transaction_date,Bill_amount)
+
+ drop table Transaction_table
+go
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ Create table Feedback_table
+ (Feedback_id int identity (505050,1) primary key,
+ Order_id int foreign key (order_id)references Order_table,
+ Feedback_ratings int check (Feedback_ratings in (1,2,3,4,5) ),
+ Feedback_remark Varchar(255))
+ go
+  
+  Insert into Feedback_table (order_id,Feedback_ratings,Feedback_remark)values(20020,5,'Excellent') 
+
+  Create index idx_feedback_table
+  on Feedback_table (Feedback_id,order_id)
+ 
+ drop table Feedback_table
+
+ Truncate table Feedback_table 
+
+ select*from Feedback_table where Feedback_id = 505050---> Filtering a Table
+
+alter table Feedback_table add Test varchar ---> add new Column
+
+
+alter table Feedback_table drop column Test---> Drop column
+
+delete from  Feedback_table where Feedback_id = 505050 ---> delete a row / entry
+
+update Feedback_table set Updated_at = '2024-02-24' where Feedback_id = 505050 ---> Update a value in a row
+
+ALTER TABLE Feedback_table
+Alter COLUMN Test int ----> Altering data type of a table
+
+
+
+go
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ 
+-- Views
+--Customer Report with Completed Transacions
+create view vu_Customer_completed_transactions
+as 
+Select a.Customer_Id , a.Customer_Name ,b.order_id,
+b.Created_at ,c.transaction_date,c.Bill_amount
+from customers a inner join order_table b on a.customer_id = b.customer_id inner join
+Transaction_table c on b.order_id = c.order_id 
+
+select * from vu_Customer_completed_transactions
+go
+
+
+--Data Report
+create view Vu_service_data_report
+as 
+Select 
+a.service_id , a.service_type, b.spare_id , b.spare_name,
+b.vendor_id , b.vendor_name , b.vendor_price , b.selling_price
+, b.warranty , C.order_id , C.mode_of_booking,d.device_id,D.device_name
+from 
+service_table a inner join Spares_table b on a.service_id=b.service_id 
+inner join 
+Order_table c  on  b.service_id=c.service_id  inner join device_table d on c.device_id = d.device_id
+
+go
+
+--Billing report 
+create view Vu_biling_report 
+as
+ select a.customer_id , a.customer_name , a.email_id, a.contact_number,b.order_id,
+b.spare_id, b.device_id, c. transaction_id, c. Bill_amount, c.transaction_date 
+from customers a inner join order_table b on a.customer_id = b.customer_id
+inner join  transaction_table c on b.order_id = c.order_id
+go
+
+Triggers
+
+Pickup table (source)
+
+Service table (target)
+
+
+---Trigger for pickup_and_order 
+
+create trigger Trigger_pickup_and_order
+On Pickup_table
+for Insert
+as
+
+begin
+       Declare @request_id int
+	   Declare @Customer_id int
+	   Declare @Service_id int
+	   Declare @Spare_id int
+	   Declare @Device_id int
+	   Declare @Technician_id int
+	   declare @Mode_of_booking varchar(50)
+	   Declare @created_at date
+	   Declare  @Updated_at date
+	   Declare @created_by varchar(25)
+	   Declare @Remarks varchar(max)
+
+	   Select @request_id = Request_id , @Customer_id= Customer_id,@Service_id=Service_id,@Spare_id=spare_id,@device_id=Device_id,
+	   @technician_id=Technician_id,@Mode_of_booking=Booking_status,@created_at=Created_at,@Updated_at=Updated_at,@created_by=Created_by,
+	   @remarks=remarks from inserted
+
+insert into order_table ( service_Id , spare_id , device_id, Technician_Id , Mode_of_Booking ,Request_id, Created_at,Updated_at,Created_by, 
+
+Remarks,Customer_id)
+values (@service_Id , @spare_id , @device_id,@Technician_Id , @Mode_of_Booking ,@Request_id, @Created_at,@Updated_at,@Created_by, 
+
+@Remarks,@Customer_id)
+
+end
+go
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----Check For Trigger
+
+insert into pickup_table([Customer_id],[Service_id],[Device_id],[pickup_address],[pickup_date],[Technician_id],[Booking_status],[Created_at],
+[Updated_at],[Created_by],[Spare_id],[Remarks]) values(1001,1,100,'cba zyx','2024-02-27',10000,'Under process','2024-02-27','2024-02-27',
+'Karthick',1,'Display problem need to change new')
+
+select*from pickup_table
+select* from Order_table
+go
+
+--Stored_procedures With Parameters
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Create procedure Spinsert_pickup
+
+ @Customer_name varchar(50),
+ @Contact_number int,
+ @Email_id varchar(50),
+ @created_at date,
+ @Updated_at date,
+ @created_by varchar(20)
+ as
+
+Begin
+Insert into Customers (Customer_Name , Contact_number, Email_id, Created_at,updated_at,Created_by) values
+(@Customer_name,@Contact_number ,@Email_id,@created_at,@Updated_at,@created_by)
+end
+
+
+
+declare @Customer_name varchar(50)
+declare @Contact_number int
+declare @Email_id varchar(50)
+declare @created_at date
+declare @Updated_at date
+Declare @created_by varchar(20)
+Exec Spinsert_pickup 
+'Krithvik',889986543,'xyz@gmail.com','2024-02-27','2024-02-27','Arun'
+go
